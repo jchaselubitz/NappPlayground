@@ -23,13 +23,18 @@ export class Geofencer {
       })
     }
     
-    // componentWillUnmount() {
-    //   Boundary.remove('Chipotle')
-    //     .then(() => console.log('Goodbye Chipotle :('))
-    //     .catch(e => console.log('Failed to delete Chipotle :)', e))
-    // }
+    componentWillUnmount() {
+      Boundary.remove('Chipotle')
+        .then(() => console.log('Goodbye Chipotle :('))
+        .catch(e => console.log('Failed to delete Chipotle :)', e))
+    }
   }
   
 
 
 AppRegistry.registerComponent('NappPlayground', () => Geofencer);
+
+<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app uses your location to tell you when to wake up.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses your location to tell you when to wake up.</string>

@@ -3,15 +3,16 @@ import Boundary, {Events} from 'react-native-boundary';
 import { AppRegistry, Button, Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 // import Geofencer from './Geofencer';
 
-const latitude = 51.516666666
-const longitude = -0.08583333333333333
+const latitude = 51.586111111
+const longitude = -0.034444444444
 const locName = "Chilangos"
 
 const styles = StyleSheet.create({
   introText: {
     color: 'blue',
     fontWeight: 'bold',
-    fontSize: 40,
+    textAlign: 'center',
+    fontSize: 30,
   },
   button: {
     marginBottom: 30,
@@ -26,11 +27,12 @@ export default class StartNap extends Component {
   state = {  }
 
   handlePress = () => {
-    Alert.alert("You have set a location")
-    this.setBoundry() 
+    
+    this.setBoundary() 
   }
 
-  setBoundry = () =>  {
+  setBoundary = () =>  {
+    Alert.alert("You have set a location")
     Boundary.add({
       lat: latitude,
       lng: longitude,
@@ -41,12 +43,15 @@ export default class StartNap extends Component {
       .catch(e => console.error("error :(", e));
    
     Boundary.on(Events.ENTER, ids => {
-      Alert.alert(`Wake up! you are at ${ids[0]}!!`)
+      Alert.alert(`Wake up! you are at ${locName}!!`)
     });
-    
-    Boundary.on(Events.EXIT, ids => {
-      Alert.alert(`Seems you have left ${ids[0]}. SAD!`)
-    })
+  }
+
+  dropBoundary = (locName) => {
+    Alert.alert("Location Removed")
+    Boundary.remove(locName)
+    .then(() => console.log('Location Dropped'))
+    .catch(e => console.log('failed to drop location', e))
   }
 
   render() { 
@@ -58,19 +63,35 @@ export default class StartNap extends Component {
       }}>
         <View style={{
           padding: 20,
+          flex: 1, 
+          backgroundColor: 'white',
+          flexDirection: 'column',
+          justifyContent: 'center'
+        }}>
+          <Text style={styles.introText}>
+          Napp
+          </Text>
+        </View>
+        <View style={{
+          padding: 20,
           flex: 4,
-          backgroundColor: 'powderblue',
+          
           flexDirection: 'column',
           justifyContent: 'center'
           }}>
-          <Text style={styles.introText}>
-          Press the button to set alarm
-          </Text>
-          <TouchableOpacity onPress={this.handlePress} underlayColor="white">
+
+          <TouchableOpacity onPress={this.setBoundary} underlayColor="white">
             <View 
               style={styles.button}
             > 
-              <Text> Tap Here </Text>
+              <Text> Start Nap </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.dropBoundary(locName)} underlayColor="white">
+            <View 
+              style={styles.button}
+            > 
+              <Text> End Nap </Text>
             </View>
           </TouchableOpacity>
         </View>
