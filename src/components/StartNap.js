@@ -27,10 +27,11 @@ export default class StartNap extends Component {
 
   handlePress = () => {
     Alert.alert("pressed!")
-    this.setBoundry() 
+    this.setBoundary()
+    
   }
 
-  setBoundry = () =>  {
+  setBoundary = () =>  {
     Boundary.add({
       lat: 51.516666666,
       lng: -0.08583333333333333,
@@ -47,6 +48,10 @@ export default class StartNap extends Component {
     Boundary.on(Events.EXIT, ids => {
       Alert.alert(`Seems you have left ${ids[0]}. SAD!`)
     })
+  }
+
+  componentDidMount() {
+    this.setBoundary()
   }
 
   render() { 

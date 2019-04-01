@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import Boundary, {Events} from 'react-native-boundary';
 import { AppRegistry, Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 
+const latitude = 51.516666666
+const longitude = -0.08583333333333333
+const locName = "Chilangos"
 
 export class Geofencer {
-    static setBoundry = (lat, lng, locName) =>  {
+    componentWillMount() {
       Boundary.add({
-        lat: lat,
-        lng: lng,
+        lat: latitude,
+        lng: longitude,
         radius: 50, // in meters
         id: locName,
       })
