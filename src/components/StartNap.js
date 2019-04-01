@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Boundary, {Events} from 'react-native-boundary';
 import { AppRegistry, Button, Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import Geofencer from './Geofencer';
+// import Geofencer from './Geofencer';
 
 const latitude = 51.516666666
 const longitude = -0.08583333333333333
@@ -26,16 +26,16 @@ export default class StartNap extends Component {
   state = {  }
 
   handlePress = () => {
-    Alert.alert("pressed!")
+    Alert.alert("You have set a location")
     this.setBoundry() 
   }
 
   setBoundry = () =>  {
     Boundary.add({
-      lat: 51.516666666,
-      lng: -0.08583333333333333,
+      lat: latitude,
+      lng: longitude,
       radius: 50, // in meters
-      id: "Chilangos",
+      id: locName,
     })
       .then(() => console.log("success!"))
       .catch(e => console.error("error :(", e));
