@@ -76,13 +76,7 @@ export default class StartNap extends Component {
         flexDirection: 'column',
         justifyContent: 'center',
       }}>
-        <MapView style={styles.map} 
-          initialRegion={{
-            latitude:-6.270565,
-            longitude:106.759550,
-            latitudeDelta: 1,
-            longitudeDelta: 1
-            }}>
+        <MapView style={styles.map} mapType={"satellite"}>
             {!!this.props.cLatitude && !!this.props.cLongitude && <MapView.Marker
               coordinate={{"latitude":this.props.cLatitude,"longitude":this.props.cLongitude}}
               title={"Your Location"}
@@ -90,7 +84,7 @@ export default class StartNap extends Component {
         </MapView>
         <View style={{
           padding: 20,
-          flex: 2, 
+          flex: 1, 
           backgroundColor: 'white',
           flexDirection: 'column',
           justifyContent: 'center'
@@ -101,7 +95,7 @@ export default class StartNap extends Component {
         </View>
         <View style={{
           padding: 20,
-          flex: 2,
+          flex: 3,
           flexDirection: 'column',
           justifyContent: 'center'
           }}>
