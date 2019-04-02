@@ -60,10 +60,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app requires access to your calendar to create alarms.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app uses your location to tell you when to wake up.</string>
+	<string>This app needs access to your location in order to know when to wake you up.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app uses your location to tell you when to wake up.</string>
+	<string>This app will not work unless location access is set to "always".</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

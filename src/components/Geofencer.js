@@ -33,8 +33,3 @@ export class Geofencer {
 
 
 AppRegistry.registerComponent('NappPlayground', () => Geofencer);
-
-<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app uses your location to tell you when to wake up.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app uses your location to tell you when to wake up.</string>

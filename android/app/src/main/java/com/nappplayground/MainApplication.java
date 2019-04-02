@@ -3,6 +3,8 @@ package com.nappplayground;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.calendarevents.CalendarEventsPackage;
+import com.liang.RNAlarmPackage;
 import com.eddieowens.RNBoundaryPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -24,6 +26,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new CalendarEventsPackage(),
+            new RNAlarmPackage(),
             new RNBoundaryPackage()
       );
     }

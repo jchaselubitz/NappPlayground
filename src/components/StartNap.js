@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Boundary, {Events} from 'react-native-boundary';
+import RNCalendarEvents from 'react-native-calendar-events';
 import { AppRegistry, Button, Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-// import Geofencer from './Geofencer';
 
 const latitude = 51.586111111
 const longitude = -0.034444444444
@@ -25,34 +24,25 @@ const styles = StyleSheet.create({
 
 export default class StartNap extends Component {
   state = {  }
-
-  handlePress = () => {
-    
-    this.setBoundary() 
-  }
-
-  setBoundary = () =>  {
-    Alert.alert("You have set a location")
-    Boundary.add({
-      lat: latitude,
-      lng: longitude,
-      radius: 50, // in meters
-      id: locName,
+  setBoundary = () => {
+    RNCalendarEvents.saveEvent('End of Nap', {
+      startDate: '2018-08-19T19:26:00.000Z',
+      endDate: '2019-08-19T19:26:00.000Z',
+      alarms: [{
+        structuredLocation: {
+          title: "Chilangos",
+          proximity: 'enter',
+          radius: 50,
+          coords: {
+            latitude: 51.586111111,
+            longitude: -0.034444444444
+          }
+        } 
+      }]
     })
-      .then(() => console.log("success!"))
-      .catch(e => console.error("error :(", e));
-   
-    Boundary.on(Events.ENTER, ids => {
-      Alert.alert(`Wake up! you are at ${locName}!!`)
-    });
+    Alert.alert("setBoundary")
   }
-
-  dropBoundary = (locName) => {
-    Alert.alert("Location Removed")
-    Boundary.remove(locName)
-    .then(() => console.log('Location Dropped'))
-    .catch(e => console.log('failed to drop location', e))
-  }
+  
 
   render() { 
     return (
@@ -87,13 +77,13 @@ export default class StartNap extends Component {
               <Text> Start Nap </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.dropBoundary(locName)} underlayColor="white">
+          {/* <TouchableOpacity onPress={() => this.dropBoundary(locName)} underlayColor="white">
             <View 
               style={styles.button}
             > 
               <Text> End Nap </Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
      );

@@ -1,16 +1,29 @@
 import React, {Component} from 'react';
-// import Geofencer from './src/components/geofencer'
+import RNCalendarEvents from 'react-native-calendar-events';
 import StartNap from './src/components/StartNap'
-import { AppRegistry, FlatList, StyleSheet, SectionList, Text, View } from 'react-native';
+import { AppRegistry, Alert, FlatList, StyleSheet, SectionList, Text, View } from 'react-native';
+
 
 
 
 export default class App extends Component {
 
-  state = {  }
+  state = { 
+    locationPermission: undefined,
+
+   }
   render() { 
     return ( 
+      <>
+      {navigator.geolocation.requestAuthorization()}
+      {/* {RNCalendarEvents.authorizationStatus()} */}
+      {/*.then(resp => resp.json())
+      .then(resp => Alert.alert(resp))} */}
+      {/* {RNCalendarEvents.authorizeEventStore()} */}
+    
       <StartNap />
+      
+      </>
      );
   }
 }
