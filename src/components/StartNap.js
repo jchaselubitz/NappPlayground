@@ -30,12 +30,12 @@ export default class StartNap extends Component {
       endDate: '2019-08-19T19:26:00.000Z',
       alarms: [{
         structuredLocation: {
-          title: "Chilangos",
+          title: locName,
           proximity: 'enter',
           radius: 50,
           coords: {
-            latitude: 51.586111111,
-            longitude: -0.034444444444
+            latitude: latitude,
+            longitude: longitude
           }
         } 
       }]
