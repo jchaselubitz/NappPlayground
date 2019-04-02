@@ -1,16 +1,36 @@
 import React, {Component} from 'react';
-// import Geofencer from './src/components/geofencer'
+import MapView from 'react-native-maps'
 import StartNap from './src/components/StartNap'
 import { AppRegistry, FlatList, StyleSheet, SectionList, Text, View } from 'react-native';
 
-
-
 export default class App extends Component {
 
-  state = {  }
+  state = { 
+    longitude: null,
+    latitude: null,
+    error: null
+   }
+  
+  componentDidMount () {
+    navigator.geolocation.requestAuthorization()
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        console.log(position)
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        })
+      }, 
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+    )
+  }
+
+
   render() { 
     return ( 
-      <StartNap />
+      <StartNap cLongitude={this.state.longitude} cLatitude={this.state.latitude} cError={this.state.error}/>
      );
   }
 }

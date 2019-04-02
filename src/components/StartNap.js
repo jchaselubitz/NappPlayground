@@ -1,36 +1,49 @@
 import React, { Component } from 'react';
 import Boundary, {Events} from 'react-native-boundary';
-import { AppRegistry, Button, Text, View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-// import Geofencer from './Geofencer';
 
-const latitude = 51.586111111
-const longitude = -0.034444444444
+import MapView from 'react-native-maps'
+import { AppRegistry, Button, Text, Dimensions, View, StyleSheet, Alert, TouchableOpacity, Vibration } from 'react-native';
+
+
+const latitude = 51.52027777777778
+const longitude = -0.0875
 const locName = "Chilangos"
 
+const DURATION = 10000 ;
+const PATTERN = [ 100, 50] ;
+
 const styles = StyleSheet.create({
-  introText: {
-    color: 'blue',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 30,
-  },
   button: {
-    marginBottom: 30,
-    padding: 30,
+    marginBottom: 10,
+    padding: 10,
     width: 260,
     alignItems: 'center',
     backgroundColor: '#2196F3'
+  },
+  map: {
+    flex: 4,
+    backgroundColor: 'gray',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   }
 })
 
 export default class StartNap extends Component {
-  state = {  }
 
-  handlePress = () => {
-    
-    this.setBoundary() 
+
+  //===========ALERT==================
+  startVibrationFunction = () => {
+    Vibration.vibrate(PATTERN, true)
+  }
+  stopVibrationFunction = () => {
+    Vibration.cancel()
   }
 
+  //===========GEOFENCE==================
   setBoundary = () =>  {
     Alert.alert("You have set a location")
     Boundary.add({
@@ -44,6 +57,7 @@ export default class StartNap extends Component {
    
     Boundary.on(Events.ENTER, ids => {
       Alert.alert(`Wake up! you are at ${locName}!!`)
+      startVibrationFunction()
     });
   }
 
@@ -54,6 +68,7 @@ export default class StartNap extends Component {
     .catch(e => console.log('failed to drop location', e))
   }
 
+  //===========RENDER==================
   render() { 
     return (
       <View style={{
@@ -61,25 +76,35 @@ export default class StartNap extends Component {
         flexDirection: 'column',
         justifyContent: 'center',
       }}>
+        <MapView style={styles.map} 
+          initialRegion={{
+            latitude:-6.270565,
+            longitude:106.759550,
+            latitudeDelta: 1,
+            longitudeDelta: 1
+            }}>
+            {!!this.props.cLatitude && !!this.props.cLongitude && <MapView.Marker
+              coordinate={{"latitude":this.props.cLatitude,"longitude":this.props.cLongitude}}
+              title={"Your Location"}
+            />}
+        </MapView>
         <View style={{
           padding: 20,
-          flex: 1, 
+          flex: 2, 
           backgroundColor: 'white',
           flexDirection: 'column',
           justifyContent: 'center'
         }}>
-          <Text style={styles.introText}>
-          Napp
-          </Text>
+          <Text> Latitude: {this.props.cLatitude} </Text>
+          <Text> Longitude: {this.props.cLongitude} </Text>
+          <Text> {this.props.cError} </Text>
         </View>
         <View style={{
           padding: 20,
-          flex: 4,
-          
+          flex: 2,
           flexDirection: 'column',
           justifyContent: 'center'
           }}>
-
           <TouchableOpacity onPress={this.setBoundary} underlayColor="white">
             <View 
               style={styles.button}
@@ -94,6 +119,23 @@ export default class StartNap extends Component {
               <Text> End Nap </Text>
             </View>
           </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.startVibrationFunction} underlayColor="white">
+            <View 
+              style={styles.button}
+            > 
+              <Text> Start Vibration </Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.stopVibrationFunction} underlayColor="white">
+            <View 
+              style={styles.button}
+            > 
+              <Text> Stop Vibration </Text>
+            </View>
+          </TouchableOpacity>
+
         </View>
       </View>
      );
