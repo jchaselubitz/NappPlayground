@@ -40,7 +40,6 @@ export default class StartNap extends Component {
         } 
       }]
     })
-    Alert.alert("setBoundary")
   }
   
 

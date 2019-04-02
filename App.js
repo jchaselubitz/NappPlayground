@@ -10,46 +10,29 @@ export default class App extends Component {
 
   state = { 
     locationPermission: undefined,
-
    }
+
+   componentDidMount () {
+    RNCalendarEvents.authorizeEventStore()
+    navigator.geolocation.requestAuthorization()
+    RNCalendarEvents.authorizationStatus()
+    .then(resp => this.setState({ 
+      locationPermission: resp 
+    })) 
+   }
+
   render() { 
     return ( 
       <>
-      {navigator.geolocation.requestAuthorization()}
-      {/* {RNCalendarEvents.authorizationStatus()} */}
-      {/*.then(resp => resp.json())
-      .then(resp => Alert.alert(resp))} */}
-      {/* {RNCalendarEvents.authorizeEventStore()} */}
-    
       <StartNap />
-      
       </>
      );
   }
+
 }
 
 
 
-// const styles= StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingTop: 22
-//   },
-//   Header: {
-//     paddingTop: 2,
-//     paddingLeft: 10,
-//     paddingRight: 10,
-//     paddingBottom: 2,
-//     fontSize: 16,
-//     fontWeight: 'bold',
-//   },
-//   button: {
-//     padding: 10,
-//     fontSize: 18,
-//     height: 44,
-//   },
-// })
- 
 
 AppRegistry.registerComponent('NappPlayground', () => App);
 
