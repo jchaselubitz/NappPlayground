@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
+import Keys from './src/APIKey'
 import MapView from 'react-native-maps'
 import StartNap from './src/components/StartNap'
 import * as Polyline from '@mapbox/polyline'
 import { AppRegistry, FlatList, StyleSheet, SectionList, Text, View } from 'react-native';
 
-const DirectionsAPIKey =  "AIzaSyBc5h8qGXJ39QaQL0pGNtFXCo57gwGZf9M"
 
 export default class App extends Component {
 
@@ -19,7 +19,6 @@ export default class App extends Component {
    }
 
 
-   
    
   componentDidMount () {
     navigator.geolocation.requestAuthorization()
@@ -54,7 +53,7 @@ export default class App extends Component {
   async getDirections(tripOrigin, tripDestination) {
     try {
         // let resp = await fetch('https://maps.googleapis.com/maps/api/directions/json?origin=Disneyland&destination=Universal+Studios+Hollywood&key=AIzaSyBc5h8qGXJ39QaQL0pGNtFXCo57gwGZf9M')
-        let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${tripOrigin}&destination=${tripDestination}&key=${DirectionsAPIKey}`)
+        let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${tripOrigin}&destination=${tripDestination}&key=${Keys.GoogleKey}`)
         let respJson = await resp.json();
         let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
         let coords = points.map((point, index) => {
