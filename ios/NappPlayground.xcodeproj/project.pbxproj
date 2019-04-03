@@ -39,6 +39,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* NappPlaygroundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NappPlaygroundTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		78178193F925420EB20496D6 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BDF67832E18494EA53BDD05 /* libAirMaps.a */; };
+		80B3F2E98AAD45BC88C0485A /* libRNReverseGeocode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 973AA91EB39D41129357F29D /* libRNReverseGeocode.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B370B5ED8D0E43B8AFE7931E /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9063A434F0364242B4CC5E91 /* libReactNativePermissions.a */; };
@@ -131,6 +132,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
+		};
+		23A162832254E60D00FF3C34 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C6B7A9B2B124E329B393DAD /* RNReverseGeocode.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNReverseGeocode;
 		};
 		23F2D31322520426001B0787 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -377,6 +385,8 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8361D87D78B842A2BC693E66 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		9063A434F0364242B4CC5E91 /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
+		973AA91EB39D41129357F29D /* libRNReverseGeocode.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNReverseGeocode.a; sourceTree = "<group>"; };
+		9C6B7A9B2B124E329B393DAD /* RNReverseGeocode.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNReverseGeocode.xcodeproj; path = "../node_modules/@kiwicom/react-native-reverse-geocode/ios/RNReverseGeocode.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -413,6 +423,7 @@
 				EB55788EF52845938420B92E /* libRNBoundary.a in Frameworks */,
 				B370B5ED8D0E43B8AFE7931E /* libReactNativePermissions.a in Frameworks */,
 				78178193F925420EB20496D6 /* libAirMaps.a in Frameworks */,
+				80B3F2E98AAD45BC88C0485A /* libRNReverseGeocode.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +576,7 @@
 				53A71F27D92D4270B7F2AD5B /* libRNBoundary.a */,
 				9063A434F0364242B4CC5E91 /* libReactNativePermissions.a */,
 				0BDF67832E18494EA53BDD05 /* libAirMaps.a */,
+				973AA91EB39D41129357F29D /* libRNReverseGeocode.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -589,6 +601,14 @@
 			isa = PBXGroup;
 			children = (
 				23A162102253D48E00FF3C34 /* libAirMaps.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		23A162802254E60D00FF3C34 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				23A162842254E60D00FF3C34 /* libRNReverseGeocode.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -641,6 +661,7 @@
 				F6DF5A2C66B445DD885EC9BC /* RNBoundary.xcodeproj */,
 				21860A40B6904839B4562798 /* ReactNativePermissions.xcodeproj */,
 				8361D87D78B842A2BC693E66 /* AirMaps.xcodeproj */,
+				9C6B7A9B2B124E329B393DAD /* RNReverseGeocode.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -873,6 +894,10 @@
 					ProductGroup = 23440879225250EB00CD2DA0 /* Products */;
 					ProjectRef = F6DF5A2C66B445DD885EC9BC /* RNBoundary.xcodeproj */;
 				},
+				{
+					ProductGroup = 23A162802254E60D00FF3C34 /* Products */;
+					ProjectRef = 9C6B7A9B2B124E329B393DAD /* RNReverseGeocode.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -960,6 +985,13 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = 23A1620F2253D48E00FF3C34 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		23A162842254E60D00FF3C34 /* libRNReverseGeocode.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNReverseGeocode.a;
+			remoteRef = 23A162832254E60D00FF3C34 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		23F2D31422520426001B0787 /* libjsi.a */ = {
@@ -1310,12 +1342,14 @@
 					"$(SRCROOT)/../node_modules/react-native-boundary/ios",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/@kiwicom/react-native-reverse-geocode/ios",
 				);
 				INFOPLIST_FILE = NappPlaygroundTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1341,12 +1375,14 @@
 					"$(SRCROOT)/../node_modules/react-native-boundary/ios",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/@kiwicom/react-native-reverse-geocode/ios",
 				);
 				INFOPLIST_FILE = NappPlaygroundTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1373,6 +1409,7 @@
 					"$(SRCROOT)/../node_modules/react-native-boundary/ios",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/@kiwicom/react-native-reverse-geocode/ios",
 				);
 				INFOPLIST_FILE = NappPlayground/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1398,6 +1435,7 @@
 					"$(SRCROOT)/../node_modules/react-native-boundary/ios",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/@kiwicom/react-native-reverse-geocode/ios",
 				);
 				INFOPLIST_FILE = NappPlayground/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1429,11 +1467,13 @@
 					"$(SRCROOT)/../node_modules/react-native-boundary/ios",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/@kiwicom/react-native-reverse-geocode/ios",
 				);
 				INFOPLIST_FILE = "NappPlayground-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1467,11 +1507,13 @@
 					"$(SRCROOT)/../node_modules/react-native-boundary/ios",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/@kiwicom/react-native-reverse-geocode/ios",
 				);
 				INFOPLIST_FILE = "NappPlayground-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1504,11 +1546,13 @@
 					"$(SRCROOT)/../node_modules/react-native-boundary/ios",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/@kiwicom/react-native-reverse-geocode/ios",
 				);
 				INFOPLIST_FILE = "NappPlayground-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1541,11 +1585,13 @@
 					"$(SRCROOT)/../node_modules/react-native-boundary/ios",
 					"$(SRCROOT)/../node_modules/react-native-permissions/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
+					"$(SRCROOT)/../node_modules/@kiwicom/react-native-reverse-geocode/ios",
 				);
 				INFOPLIST_FILE = "NappPlayground-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

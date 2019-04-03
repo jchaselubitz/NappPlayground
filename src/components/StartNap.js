@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Boundary, {Events} from 'react-native-boundary';
-
+import RNReverseGeocode from "@kiwicom/react-native-reverse-geocode";
 import MapView from 'react-native-maps'
 import { AppRegistry, Button, Text, Dimensions, View, StyleSheet, Alert, TouchableOpacity, Vibration } from 'react-native';
 
@@ -12,27 +12,34 @@ const DURATION = 10000 ;
 const PATTERN = [ 100, 50] ;
 let selectedMapType = "standard"
 
-const styles = StyleSheet.create({
-  button: {
-    marginBottom: 10,
-    padding: 10,
-    width: 260,
-    alignItems: 'center',
-    backgroundColor: '#2196F3'
-  },
-  map: {
-    flex: 4,
-    backgroundColor: 'gray',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  }
-})
 
 export default class StartNap extends Component {
+
+  state = {
+    error: null,
+    results: null
+  }
+
+  searchText = "Station";
+  region = {
+    latitude: 50,
+    longitude: 14,
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.1
+  };
+
+  placeSearch = () => {
+    RNReverseGeocode.searchForLocations(
+      this.searchText,
+      this.region,
+      (err, res) => {
+        this.setState({
+          error: err,
+          addresses: res
+        });
+      }
+    );
+  }
 
 
   //===========ALERT==================
@@ -46,6 +53,7 @@ export default class StartNap extends Component {
   //===========GEOFENCE==================
   setBoundary = () =>  {
     Alert.alert("You have set a location")
+    this.placeSearch() /////sdfasdfasdfasdfasdfasdfasfasfasdfasdfasdf
     Boundary.add({
       lat: latitude,
       lng: longitude,
@@ -57,7 +65,8 @@ export default class StartNap extends Component {
    
     Boundary.on(Events.ENTER, ids => {
       Alert.alert(`Wake up! you are at ${locName}!!`)
-      startVibrationFunction()
+      this.startVibrationFunction()
+      
     });
   }
 
@@ -176,6 +185,26 @@ export default class StartNap extends Component {
      );
   }
 }
+
+const styles = StyleSheet.create({
+  button: {
+    marginBottom: 10,
+    padding: 10,
+    width: 260,
+    alignItems: 'center',
+    backgroundColor: '#2196F3'
+  },
+  map: {
+    flex: 4,
+    backgroundColor: 'gray',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  }
+})
 
 AppRegistry.registerComponent('NappPlayground', () => StartNap);
 

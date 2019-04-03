@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import MapView from 'react-native-maps'
 import StartNap from './src/components/StartNap'
+import * as Polyline from '@mapbox/polyline'
 import { AppRegistry, FlatList, StyleSheet, SectionList, Text, View } from 'react-native';
 
 const DirectionsAPIKey =  "AIzaSyBc5h8qGXJ39QaQL0pGNtFXCo57gwGZf9M"
@@ -12,13 +13,14 @@ export default class App extends Component {
     latitude: null,
     error: null,
     coords: [],
-    x: 'false',
-    cordLatitude:5.52,
-    cordLongitude:-0.08,
+    x: 'true',
+    cordLatitude:51.5201459,
+    cordLongitude:-0.08743959999999999,
    }
 
+
    
-  
+   
   componentDidMount () {
     navigator.geolocation.requestAuthorization()
     navigator.geolocation.getCurrentPosition(
@@ -43,7 +45,7 @@ export default class App extends Component {
        this.setState({
          concat: concatLot
        }, () => {
-         this.getDirections(concatLot, "-6.270565,106.759550");
+         this.getDirections(concatLot, "51.5201459,-0.08743959999999999");
        });
      }
   }
@@ -51,6 +53,7 @@ export default class App extends Component {
 
   async getDirections(tripOrigin, tripDestination) {
     try {
+        // let resp = await fetch('https://maps.googleapis.com/maps/api/directions/json?origin=Disneyland&destination=Universal+Studios+Hollywood&key=AIzaSyBc5h8qGXJ39QaQL0pGNtFXCo57gwGZf9M')
         let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${tripOrigin}&destination=${tripDestination}&key=${DirectionsAPIKey}`)
         let respJson = await resp.json();
         let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
