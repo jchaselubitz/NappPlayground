@@ -8,9 +8,9 @@ import { AppRegistry, Button, Text, Dimensions, View, StyleSheet, Alert, Touchab
 const latitude = 51.52027777777778
 const longitude = -0.0875
 const locName = "Chilangos"
-
 const DURATION = 10000 ;
 const PATTERN = [ 100, 50] ;
+let selectedMapType = "standard"
 
 const styles = StyleSheet.create({
   button: {
@@ -68,6 +68,9 @@ export default class StartNap extends Component {
     .catch(e => console.log('failed to drop location', e))
   }
 
+  
+
+
   //===========RENDER==================
   render() { 
     return (
@@ -76,13 +79,8 @@ export default class StartNap extends Component {
         flexDirection: 'column',
         justifyContent: 'center',
       }}>
-        <MapView style={styles.map} mapType={"satellite"}>
-            {!!this.props.cLatitude && !!this.props.cLongitude && <MapView.Marker
-              coordinate={{"latitude":this.props.cLatitude,"longitude":this.props.cLongitude}}
-              title={"Your Location"}
-            />}
-        </MapView>
-        <View style={{
+
+      <View style={{
           padding: 20,
           flex: 1, 
           backgroundColor: 'white',
@@ -93,6 +91,49 @@ export default class StartNap extends Component {
           <Text> Longitude: {this.props.cLongitude} </Text>
           <Text> {this.props.cError} </Text>
         </View>
+
+        <MapView 
+          style={styles.map}
+          mapType={selectedMapType}
+          region={{
+            latitude: !!this.props.cLatitude ? this.props.cLatitude : 0,
+            longitude: !!this.props.cLongitude ? this.props.cLongitude : 0,
+            latitudeDelta: 1,
+            longitudeDelta: 1,
+          }}
+          >
+            {!!this.props.cLatitude && !!this.props.cLongitude && <MapView.Marker
+              coordinate={{"latitude": this.props.cLatitude,"longitude": this.props.cLongitude}}
+              title={"Your Location"}
+            />}
+
+            {!!this.props.cordLatitude && !!this.props.cordLongitude && <MapView.Marker
+              coordinate={{"latitude":this.props.cordLatitude,"longitude":this.props.cordLongitude}}
+              title={"Your Destination"}
+            />}
+            
+           {!!this.props.cLatitude && !!this.props.cLatitude && this.props.x == 'true' && 
+            <MapView.Polyline
+                coordinates={this.props.coords}
+                strokeWidth={2}
+                strokeColor="red"
+              />
+            }
+
+            {!!this.props.cLatitude && !!this.props.cLatitude && this.props.x == 'error' && 
+              <MapView.Polyline
+                      coordinates={[
+                          {latitude: this.props.cLatitude, longitude: this.props.cLatitude},
+                          {latitude: this.props.cordLatitude, longitude: this.props.cordLongitude},
+                      ]}
+                      strokeWidth={2}
+                      strokeColor="red"
+              />
+            }          
+        </MapView>
+        
+
+        
         <View style={{
           padding: 20,
           flex: 3,
