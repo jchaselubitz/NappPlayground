@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 import Boundary, {Events} from 'react-native-boundary';
 import RNReverseGeocode from "@kiwicom/react-native-reverse-geocode";
 import MapView from 'react-native-maps'
-import MapClass from './MapClass'
-import AppStyles from '../AppStyles'
 import { AppRegistry, Button, Text, Dimensions, View, StyleSheet, Alert, TouchableOpacity, Vibration } from 'react-native';
 
 
-const latitude = 51.52027777777778
-const longitude = -0.0875
+const latitude = 51.5185847
+const longitude = -0.0856228
 const locName = "Chilangos"
 const DURATION = 10000 ;
 const PATTERN = [ 100, 50] ;
-
+const selectedMapType = "standard"
 
 
 export default class StartNap extends Component {
+ 
 
   state = {
     error: null,
-    searchResults: null
+    searchResults: null,
+    loading: false,
+    data: [],
   }
 
-  
   region = {
     latitude: 50,
     longitude: 14,
@@ -30,6 +30,9 @@ export default class StartNap extends Component {
     longitudeDelta: 0.1
   };
 
+
+
+ //===========POI SEARCH==================
   placeSearch = (searchText) => {
     RNReverseGeocode.searchForLocations(
       searchText,
@@ -43,6 +46,20 @@ export default class StartNap extends Component {
     );
   }
 
+  // arrayHolder = []
+
+  // searchFilterFunction = text => {    
+  //   const newData = this.state.searchResults.filter(item => {      
+  //     const itemData = `${item.name.toUpperCase()}`
+  
+  //      const textData = text.toUpperCase();
+        
+  //      return itemData.indexOf(textData) > -1;    
+  //   });    
+  
+  //   this.setState({ data: newData });  
+  // };
+
 
   //===========ALERT==================
   startVibrationFunction = () => {
@@ -52,10 +69,12 @@ export default class StartNap extends Component {
     Vibration.cancel()
   }
 
+
+
   //===========GEOFENCE==================
   setBoundary = () =>  {
     Alert.alert("You have set a location")
-    this.placeSearch() /////sdfasdfasdfasdfasdfasdfasfasfasdfasdfasdf
+    
     Boundary.add({
       lat: latitude,
       lng: longitude,
@@ -89,94 +108,111 @@ export default class StartNap extends Component {
         flexDirection: 'column',
         justifyContent: 'center',
       }}>
-       
 
         <View style={{
-          padding: 20,
-          flex: 1, 
-          backgroundColor: 'white',
-          flexDirection: 'column',
-          justifyContent: 'center'
-        }}>
-          <Text> Latitude: {this.props.cLatitude} </Text>
-          <Text> Longitude: {this.props.cLongitude} </Text>
-          <Text> {this.props.cError} </Text>
-        </View>
+            padding: 20,
+            flex: 1, 
+            backgroundColor: 'white',
+            flexDirection: 'column',
+            justifyContent: 'center'
+          }}>
+            <Text> Latitude: {this.props.cLatitude} </Text>
+            <Text> Longitude: {this.props.cLongitude} </Text>
+            <Text> {this.props.cError} </Text>
+          </View>
 
-        <MapClass 
-          cLatitude={this.props.latitude}
-          cLongitude={this.props.longitude}
-          cError={this.props.error}
-          coords={this.props.coords}
-          x={this.props.x}
-          cordLatitude={this.props.cordLatitude}
-          cordLongitude={this.props.cordLongitude}
-        />
-        
+          <MapView 
+            style={styles.map}
+            mapType={selectedMapType}
+            region={{
+              latitude: !!this.props.cLatitude ? this.props.cLatitude : 0,
+              longitude: !!this.props.cLongitude ? this.props.cLongitude : 0,
+              latitudeDelta: 1,
+              longitudeDelta: 1,
+            }}
+            >
+              {!!this.props.cLatitude && !!this.props.cLongitude && <MapView.Marker
+                coordinate={{"latitude": this.props.cLatitude,"longitude": this.props.cLongitude}}
+                title={"Your Location"}
+              />}
+
+              {!!this.props.cordLatitude && !!this.props.cordLongitude && <MapView.Marker
+                coordinate={{"latitude":this.props.cordLatitude,"longitude":this.props.cordLongitude}}
+                title={"Your Destination"}
+              />}
+              
+            {!!this.props.cLatitude && !!this.props.cLatitude && this.props.x == 'true' && 
+              <MapView.Polyline
+                  coordinates={this.props.coords}
+                  strokeWidth={2}
+                  strokeColor="red"
+                />
+              }
+
+              {!!this.props.cLatitude && !!this.props.cLatitude && this.props.x == 'error' && 
+                <MapView.Polyline
+                        coordinates={[
+                            {latitude: this.props.cLatitude, longitude: this.props.cLatitude},
+                            {latitude: this.props.cordLatitude, longitude: this.props.cordLongitude},
+                        ]}
+                        strokeWidth={2}
+                        strokeColor="red"
+                />
+              }          
+          </MapView>
+       
         <View style={{
           padding: 20,
           flex: 3,
           flexDirection: 'column',
           justifyContent: 'center'
           }}>
-          <TouchableOpacity onPress={this.setBoundary} underlayColor="white">
-            <View 
-              style={styles.button}
-            > 
-              <Text> Start Nap </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.dropBoundary(locName)} underlayColor="white">
-            <View 
-              style={styles.button}
-            > 
-              <Text> End Nap </Text>
-            </View>
-          </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.startVibrationFunction} underlayColor="white">
-            <View 
-              style={styles.button}
-            > 
-              <Text> Start Vibration </Text>
-            </View>
-          </TouchableOpacity>
 
-          <TouchableOpacity onPress={this.stopVibrationFunction} underlayColor="white">
-            <View 
-              style={styles.button}
-            > 
-              <Text> Stop Vibration </Text>
-            </View>
-          </TouchableOpacity>
+        {/* <SearchBar        
+              placeholder="Type Here..."        
+              lightTheme        
+              round        
+              onChangeText={text => this.searchFilterFunction(text)}
+              autoCorrect={false}             
+            />     */}
 
+          {/* <FlatList 
+            data={[{title: ‘Title Text’, key: ‘item1’}, …]} 
+            renderItem={({item}) => <ListItem title={item.title} />} 
+          /> */}
+
+          {/* Put search stuff here */}
+          <Button title="Set Boundary" onPress={this.setBoundary} />
+          <Button title="Drop Boundary" onPress={() => this.dropBoundary(locName)} />
+          <Button title="Start Vibration" onPress={this.startVibrationFunction} />
+          <Button title="End Vibration" onPress={this.startVibrationFunction} />
+          <Button title="Fake Search" onPress={() => this.placeSearch("charles")} />
         </View>
       </View>
      );
   }
 }
 
-const styles = AppStyles.styles
-
-// const styles = StyleSheet.create({
-//   button: {
-//     marginBottom: 10,
-//     padding: 10,
-//     width: 260,
-//     alignItems: 'center',
-//     backgroundColor: '#2196F3'
-//   },
-//   map: {
-//     flex: 4,
-//     backgroundColor: 'gray',
-//     flexDirection: 'column',
-//     justifyContent: 'center',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0
-//   }
-// })
+const styles = StyleSheet.create({
+  button: {
+    marginBottom: 10,
+    padding: 10,
+    width: 260,
+    alignItems: 'center',
+    backgroundColor: '#2196F3'
+  },
+  map: {
+    flex: 4,
+    backgroundColor: 'gray',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  }
+})
 
 AppRegistry.registerComponent('NappPlayground', () => StartNap);
 

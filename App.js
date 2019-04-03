@@ -6,6 +6,7 @@ import * as Polyline from '@mapbox/polyline'
 import { AppRegistry, FlatList, StyleSheet, SectionList, Text, View } from 'react-native';
 
 
+
 export default class App extends Component {
 
   state = { 
@@ -19,7 +20,6 @@ export default class App extends Component {
    }
 
 
-   
   componentDidMount () {
     navigator.geolocation.requestAuthorization()
     navigator.geolocation.getCurrentPosition(
@@ -52,6 +52,7 @@ export default class App extends Component {
 
   async getDirections(tripOrigin, tripDestination) {
     try {
+
         let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${tripOrigin}&destination=${tripDestination}&key=${Keys.GoogleKey}`)
         let respJson = await resp.json();
         let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
