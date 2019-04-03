@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Boundary, {Events} from 'react-native-boundary';
 import RNReverseGeocode from "@kiwicom/react-native-reverse-geocode";
 import MapView from 'react-native-maps'
+import MapClass from './MapClass'
+import AppStyles from '../AppStyles'
 import { AppRegistry, Button, Text, Dimensions, View, StyleSheet, Alert, TouchableOpacity, Vibration } from 'react-native';
 
 
@@ -10,17 +12,17 @@ const longitude = -0.0875
 const locName = "Chilangos"
 const DURATION = 10000 ;
 const PATTERN = [ 100, 50] ;
-let selectedMapType = "standard"
+
 
 
 export default class StartNap extends Component {
 
   state = {
     error: null,
-    results: null
+    searchResults: null
   }
 
-  searchText = "Station";
+  
   region = {
     latitude: 50,
     longitude: 14,
@@ -28,14 +30,14 @@ export default class StartNap extends Component {
     longitudeDelta: 0.1
   };
 
-  placeSearch = () => {
+  placeSearch = (searchText) => {
     RNReverseGeocode.searchForLocations(
-      this.searchText,
+      searchText,
       this.region,
       (err, res) => {
         this.setState({
           error: err,
-          addresses: res
+          searchResults: res
         });
       }
     );
@@ -79,7 +81,6 @@ export default class StartNap extends Component {
 
   
 
-
   //===========RENDER==================
   render() { 
     return (
@@ -88,8 +89,9 @@ export default class StartNap extends Component {
         flexDirection: 'column',
         justifyContent: 'center',
       }}>
+       
 
-      <View style={{
+        <View style={{
           padding: 20,
           flex: 1, 
           backgroundColor: 'white',
@@ -101,47 +103,15 @@ export default class StartNap extends Component {
           <Text> {this.props.cError} </Text>
         </View>
 
-        <MapView 
-          style={styles.map}
-          mapType={selectedMapType}
-          region={{
-            latitude: !!this.props.cLatitude ? this.props.cLatitude : 0,
-            longitude: !!this.props.cLongitude ? this.props.cLongitude : 0,
-            latitudeDelta: 1,
-            longitudeDelta: 1,
-          }}
-          >
-            {!!this.props.cLatitude && !!this.props.cLongitude && <MapView.Marker
-              coordinate={{"latitude": this.props.cLatitude,"longitude": this.props.cLongitude}}
-              title={"Your Location"}
-            />}
-
-            {!!this.props.cordLatitude && !!this.props.cordLongitude && <MapView.Marker
-              coordinate={{"latitude":this.props.cordLatitude,"longitude":this.props.cordLongitude}}
-              title={"Your Destination"}
-            />}
-            
-           {!!this.props.cLatitude && !!this.props.cLatitude && this.props.x == 'true' && 
-            <MapView.Polyline
-                coordinates={this.props.coords}
-                strokeWidth={2}
-                strokeColor="red"
-              />
-            }
-
-            {!!this.props.cLatitude && !!this.props.cLatitude && this.props.x == 'error' && 
-              <MapView.Polyline
-                      coordinates={[
-                          {latitude: this.props.cLatitude, longitude: this.props.cLatitude},
-                          {latitude: this.props.cordLatitude, longitude: this.props.cordLongitude},
-                      ]}
-                      strokeWidth={2}
-                      strokeColor="red"
-              />
-            }          
-        </MapView>
-        
-
+        <MapClass 
+          cLatitude={this.props.latitude}
+          cLongitude={this.props.longitude}
+          cError={this.props.error}
+          coords={this.props.coords}
+          x={this.props.x}
+          cordLatitude={this.props.cordLatitude}
+          cordLongitude={this.props.cordLongitude}
+        />
         
         <View style={{
           padding: 20,
@@ -186,25 +156,27 @@ export default class StartNap extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  button: {
-    marginBottom: 10,
-    padding: 10,
-    width: 260,
-    alignItems: 'center',
-    backgroundColor: '#2196F3'
-  },
-  map: {
-    flex: 4,
-    backgroundColor: 'gray',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  }
-})
+const styles = AppStyles.styles
+
+// const styles = StyleSheet.create({
+//   button: {
+//     marginBottom: 10,
+//     padding: 10,
+//     width: 260,
+//     alignItems: 'center',
+//     backgroundColor: '#2196F3'
+//   },
+//   map: {
+//     flex: 4,
+//     backgroundColor: 'gray',
+//     flexDirection: 'column',
+//     justifyContent: 'center',
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0
+//   }
+// })
 
 AppRegistry.registerComponent('NappPlayground', () => StartNap);
 

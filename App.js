@@ -52,7 +52,6 @@ export default class App extends Component {
 
   async getDirections(tripOrigin, tripDestination) {
     try {
-        // let resp = await fetch('https://maps.googleapis.com/maps/api/directions/json?origin=Disneyland&destination=Universal+Studios+Hollywood&key=AIzaSyBc5h8qGXJ39QaQL0pGNtFXCo57gwGZf9M')
         let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${tripOrigin}&destination=${tripDestination}&key=${Keys.GoogleKey}`)
         let respJson = await resp.json();
         let points = Polyline.decode(respJson.routes[0].overview_polyline.points);
