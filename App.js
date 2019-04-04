@@ -17,7 +17,9 @@ export default class App extends Component {
     x: 'true',
     cordLatitude: null,
     cordLongitude: null,
-    destinationName: undefined
+    destinationName: undefined,
+    concatStart: undefined,
+    concatDestination: undefined
    }
 
   setSelectionLocation = (location) => {
@@ -37,21 +39,23 @@ export default class App extends Component {
           longitude: position.coords.longitude,
           error: null
         })
-        this.mergeLot()
+        // this.mergeLot()
       }, 
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
     )
   }
 
-  mergeLot = () => {
+  setRoute = () => {
     if (this.state.latitude != null && this.state.longitude!=null)
      {
-       let concatLot = this.state.latitude +","+this.state.longitude
+       let concatStart = this.state.latitude +","+this.state.longitude
+       let concatDestination = this.state.cordLatitude +","+this.state.cordLongitude
        this.setState({
-         concat: concatLot
+         concatStart,
+         concatDestination
        }, () => {
-         this.getDirections(concatLot, "51.5201459,-0.08743959999999999");
+         this.getDirections(concatStart, concatDestination);
        });
      }
   }
@@ -87,7 +91,8 @@ export default class App extends Component {
         x={this.state.x}
         cordLatitude={this.state.cordLatitude}
         cordLongitude={this.state.cordLongitude}
-        setSelectionLocation={this.setSelectionLocation}/>
+        setSelectionLocation={this.setSelectionLocation}
+        setRoute={this.setRoute}/>
      );
   }
 }

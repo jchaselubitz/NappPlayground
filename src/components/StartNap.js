@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Boundary, {Events} from 'react-native-boundary';
 import RNReverseGeocode from "@kiwicom/react-native-reverse-geocode";
 import MapView from 'react-native-maps'
-import { AppRegistry, List, Button, Text, Dimensions, View, StyleSheet, Alert, TouchableOpacity, Vibration, FlatList } from 'react-native';
+import { AppRegistry, List, Button, KeyboardAvoidingView, Text, Dimensions, View, StyleSheet, Alert, TouchableOpacity, Vibration, FlatList } from 'react-native';
 import { SearchBar, ListItem} from 'react-native-elements';
 
 //target coords
@@ -49,15 +49,12 @@ export default class StartNap extends Component {
       (err, results) => {
         this.setState({
           error: err,
-          searchResults: results
+          searchResults: this.state.searchText !== "" ? results : []
         });
       }
     );
   }
 
-  clearSearch = () => {
-    this.setState({ searchText: "" });
-  }
  
   
 
@@ -103,6 +100,8 @@ export default class StartNap extends Component {
   //===========RENDER==================
   render() { 
     return (
+      
+
       <View style={{
         flex: 12,
         flexDirection: 'column',
@@ -112,7 +111,7 @@ export default class StartNap extends Component {
 {/* ================ LatLong ========================== */}
         <View style={{
         paddingTop: 40,
-        flex: 1,
+     
         flexDirection: 'row',
         justifyContent: 'center',
         }}>
@@ -141,7 +140,7 @@ export default class StartNap extends Component {
             <Text> Longitude: {this.props.cordLongitude} </Text>
             <Text> {this.props.cError} </Text>
           </View>
-
+          <View><Text>{this.state.searchText}</Text></View>
           
           </View>
 {/* ================ MAP ========================== */}
@@ -186,14 +185,15 @@ export default class StartNap extends Component {
           </MapView>
 
        {/* ================ SEARCH ========================== */}
-       
+       <KeyboardAvoidingView behavior="padding" enabled>
+
     
             <SearchBar        
                   placeholder="Where are you going?" 
                   lightTheme
                   round={true}
                   inputStyle={styles.searchInput}
-                  onClear={this.clearSearch}         
+                  onClear={() => this.placeSearch('')}         
                   onChangeText={text => this.setSearchText(text)}
                   value={this.state.searchText}
                   autoCorrect={false}             
@@ -208,7 +208,7 @@ export default class StartNap extends Component {
                     />} 
                   />
 
-    
+</KeyboardAvoidingView>
 
             
     {/* ================ BUTTONS ========================== */}
@@ -219,14 +219,25 @@ export default class StartNap extends Component {
           flexDirection: 'column',
           justifyContent: 'center'
           }}>
+            <Button title="Set Route" onPress={this.props.setRoute} />
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'center'
+          }}>
+            <Button title="Drop Boundary" onPress={() => this.dropBoundary(locName)} />
+            <Button title="Fake Search" onPress={() => this.placeSearch("charles")} />
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'center'
+          }}>
+            <Button title="Start Vibration" onPress={this.startVibrationFunction} />
+            <Button title="End Vibration" onPress={this.stopVibrationFunction} />
+          </View>
 
-          {/* <Button title="Set Boundary" onPress={this.setBoundary} /> */}
-          <Button title="Drop Boundary" onPress={() => this.dropBoundary(locName)} />
-          <Button title="Start Vibration" onPress={this.startVibrationFunction} />
-          <Button title="End Vibration" onPress={this.stopVibrationFunction} />
-          <Button title="Fake Search" onPress={() => this.placeSearch("charles")} />
         </View>
       </View>
+ 
      );
   }
 }
