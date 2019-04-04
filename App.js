@@ -19,6 +19,12 @@ export default class App extends Component {
     cordLongitude:-0.08743959999999999,
    }
 
+  setSelectionLocation = (location) => {
+    this.setState({ 
+      cordLatitude: location.latitude,
+      cordLongitude: location.longitude
+     });
+  }
 
   componentDidMount () {
     navigator.geolocation.requestAuthorization()
@@ -79,7 +85,8 @@ export default class App extends Component {
         coords={this.state.coords}
         x={this.state.x}
         cordLatitude={this.state.cordLatitude}
-        cordLongitude={this.state.cordLongitude} />
+        cordLongitude={this.state.cordLongitude}
+        setSelectionLocation={this.setSelectionLocation}/>
      );
   }
 }

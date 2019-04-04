@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import Boundary, {Events} from 'react-native-boundary';
 import RNReverseGeocode from "@kiwicom/react-native-reverse-geocode";
 import MapView from 'react-native-maps'
-import { AppRegistry, Button, Text, Dimensions, View, StyleSheet, Alert, TouchableOpacity, Vibration } from 'react-native';
+import { AppRegistry, List, Button, Text, Dimensions, View, StyleSheet, Alert, TouchableOpacity, Vibration, FlatList } from 'react-native';
+import { SearchBar, ListItem} from 'react-native-elements';
 
-
+//target coords
 const latitude = 51.5185847
 const longitude = -0.0856228
 const locName = "Chilangos"
@@ -18,48 +19,47 @@ export default class StartNap extends Component {
 
   state = {
     error: null,
-    searchResults: null,
     loading: false,
-    data: [],
+    searchText: "",
+    searchResults: [],
+   
   }
-
-  region = {
-    latitude: 50,
-    longitude: 14,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1
-  };
 
 
 
  //===========POI SEARCH==================
+
+ region = {
+  latitude: !!this.props.cLatitude ? this.props.cLatitude : 0,
+  longitude: !!this.props.cLongitude ? this.props.cLongitude : 0,
+  latitudeDelta: 0.1,
+  longitudeDelta: 0.1
+};
+
+  setSearchText = (text) => {
+    this.setState({
+      searchText: text
+    }, this.placeSearch(this.state.searchText))
+  }
+  
   placeSearch = (searchText) => {
     RNReverseGeocode.searchForLocations(
       searchText,
       this.region,
-      (err, res) => {
+      (err, results) => {
         this.setState({
           error: err,
-          searchResults: res
+          searchResults: results
         });
       }
     );
   }
 
-  // arrayHolder = []
-
-  // searchFilterFunction = text => {    
-  //   const newData = this.state.searchResults.filter(item => {      
-  //     const itemData = `${item.name.toUpperCase()}`
+  clearSearch = () => {
+    this.setState({ searchText: "" });
+  }
+ 
   
-  //      const textData = text.toUpperCase();
-        
-  //      return itemData.indexOf(textData) > -1;    
-  //   });    
-  
-  //   this.setState({ data: newData });  
-  // };
-
 
   //===========ALERT==================
   startVibrationFunction = () => {
@@ -104,11 +104,12 @@ export default class StartNap extends Component {
   render() { 
     return (
       <View style={{
-        flex: 5,
+        flex: 12,
         flexDirection: 'column',
         justifyContent: 'center',
       }}>
 
+{/* ================ LatLong ========================== */}
         <View style={{
             padding: 20,
             flex: 1, 
@@ -121,6 +122,7 @@ export default class StartNap extends Component {
             <Text> {this.props.cError} </Text>
           </View>
 
+{/* ================ MAP ========================== */}
           <MapView 
             style={styles.map}
             mapType={selectedMapType}
@@ -160,7 +162,35 @@ export default class StartNap extends Component {
                 />
               }          
           </MapView>
+
+       {/* ================ SEARCH ========================== */}
        
+    
+            <SearchBar        
+                  placeholder="Where are you going?" 
+                  lightTheme
+                  round={true}
+                  inputStyle={styles.searchInput}
+                  onClear={this.clearSearch}         
+                  onChangeText={text => this.setSearchText(text)}
+                  value={this.state.searchText}
+                  autoCorrect={false}             
+                />    
+              <FlatList 
+                  data={this.state.searchResults} 
+                  renderItem={({item}) => 
+                    <ListItem 
+                      title={item.name}
+                      onPress={() => this.props.setSelectionLocation(item.location)}
+                      
+                    />} 
+                  />
+
+    
+
+            
+    {/* ================ BUTTONS ========================== */}
+
         <View style={{
           padding: 20,
           flex: 3,
@@ -168,25 +198,10 @@ export default class StartNap extends Component {
           justifyContent: 'center'
           }}>
 
-
-        {/* <SearchBar        
-              placeholder="Type Here..."        
-              lightTheme        
-              round        
-              onChangeText={text => this.searchFilterFunction(text)}
-              autoCorrect={false}             
-            />     */}
-
-          {/* <FlatList 
-            data={[{title: ‘Title Text’, key: ‘item1’}, …]} 
-            renderItem={({item}) => <ListItem title={item.title} />} 
-          /> */}
-
-          {/* Put search stuff here */}
           <Button title="Set Boundary" onPress={this.setBoundary} />
           <Button title="Drop Boundary" onPress={() => this.dropBoundary(locName)} />
           <Button title="Start Vibration" onPress={this.startVibrationFunction} />
-          <Button title="End Vibration" onPress={this.startVibrationFunction} />
+          <Button title="End Vibration" onPress={this.stopVibrationFunction} />
           <Button title="Fake Search" onPress={() => this.placeSearch("charles")} />
         </View>
       </View>
@@ -211,6 +226,12 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0
+  },
+  flatList: {
+    flex: 6
+  },
+  searchInput: {
+    color: "black"
   }
 })
 
