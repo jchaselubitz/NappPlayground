@@ -15,8 +15,9 @@ export default class App extends Component {
     error: null,
     coords: [],
     x: 'true',
-    cordLatitude:51.5201459,
-    cordLongitude:-0.08743959999999999,
+    cordLatitude: null,
+    cordLongitude: null,
+    destinationName: undefined
    }
 
   setSelectionLocation = (location) => {

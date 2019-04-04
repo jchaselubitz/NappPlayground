@@ -76,8 +76,8 @@ export default class StartNap extends Component {
     Alert.alert("You have set a location")
     
     Boundary.add({
-      lat: latitude,
-      lng: longitude,
+      lat: this.props.cordLatitude,
+      lng: this.props.cLongitude,
       radius: 50, // in meters
       id: locName,
     })
@@ -111,17 +111,39 @@ export default class StartNap extends Component {
 
 {/* ================ LatLong ========================== */}
         <View style={{
+        paddingTop: 40,
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        }}>
+          <View style={{
             padding: 20,
             flex: 1, 
             backgroundColor: 'white',
             flexDirection: 'column',
             justifyContent: 'center'
           }}>
+            <Text>Current Location</Text>
             <Text> Latitude: {this.props.cLatitude} </Text>
             <Text> Longitude: {this.props.cLongitude} </Text>
             <Text> {this.props.cError} </Text>
           </View>
 
+          <View style={{
+            padding: 20,
+            flex: 1, 
+            backgroundColor: 'white',
+            flexDirection: 'column',
+            justifyContent: 'center'
+          }}>
+            <Text>Destination Location</Text>
+            <Text> Latitude: {this.props.cordLatitude} </Text>
+            <Text> Longitude: {this.props.cordLongitude} </Text>
+            <Text> {this.props.cError} </Text>
+          </View>
+
+          
+          </View>
 {/* ================ MAP ========================== */}
           <MapView 
             style={styles.map}
@@ -198,7 +220,7 @@ export default class StartNap extends Component {
           justifyContent: 'center'
           }}>
 
-          <Button title="Set Boundary" onPress={this.setBoundary} />
+          {/* <Button title="Set Boundary" onPress={this.setBoundary} /> */}
           <Button title="Drop Boundary" onPress={() => this.dropBoundary(locName)} />
           <Button title="Start Vibration" onPress={this.startVibrationFunction} />
           <Button title="End Vibration" onPress={this.stopVibrationFunction} />
